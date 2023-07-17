@@ -1,0 +1,237 @@
+Day 1
+0.Confirm that you have extracted tomcat zip file.
+
+2. Confirm 
+2.1 JDK version : JDK 11
+2.2 IDE : Eclipse STS 3.9.18
+2.3 Create NEW workspace , for advanced java.
+2.4 Add Apache Tomcat web server , in the new workspace
+2.5 Confirm if server is  starting properly , without any exceptions
+2.6 Create dynamic web app n test index.html
+
+3. Extract Java EE docs from : day1-data/day1_help/advanced java pre requisites/softwares n docs\javaee-api-8.0-javadoc.jar"
+
+4. In index.html , add a link to test the servlet , deployed using annotations
+(Servlet1)
+
+5. In index.html , add another link to test the servlet , deployed using xml tags
+(Servlet2)
+
+Servlet1 should be loaded eagerly
+Servlet2 should be loaded lazily
+
+
+Confirm complete servlet life cycle
+(by printing messages on the server console)
+
+
+6. Revise JDBC 
+
+User signin 
+Steps
+6.0 create database advjava  n copy users n candidates tables.
+
+6.1 Create DBUtils: edit DB user name n pwd
+Add methods : 
+openConnection  
+closeConnection
+  
+6.2 Create POJO : User (voting status : boolean)
+
+
+6.3 DAO
+UserDao : interface
+User  authenticateUser(String email,String pwd) throws SqlException
+Implementation class
+Write a tester for testing this OR still better JUnit Test case.
+(main class n not a servlet !)
+
+
+Important Readmes : (MUST Read !)
+sequence.txt
+regarding HttpServlet.txt
+
+
+Day 2
+1. Open Servers project , from IDE , package explorer.
+Copy context.xml from "day1-data/day1_help/advanced java pre requisites/softwares n docs/config files" 
+This is for setting a cookie policy , to accept whitespace char.
+
+
+2. import day2.1 , in your workspace as existing Java project.
+2.1 Edit DBUtils , only username n password
+
+2.2 We will revise entire web app flow from login till logout.
+
+3. Today's assignment : New Voter registration
+Add a Voter SignUp link in login.html
+Accept : first_name , last_name , email, password , dob 
+
+Submit it to RegisterVoterServlet
+Read request parameters.
+Add a validation rule. 
+Voter's age must be > 21 .
+If yes insert voter details in DB (using DAO n POJO , DBUtils)
+id : will be auto incremented , role assigned should be voter , the status : false (i.e not yet voted)
+
+Otherwise , give suitable error mesg. 
+
+
+
+Day 3
+
+1. import day3.1 as existing project in your workspace
+(Edit DBUtils as per your DB settings)
+Revise entire flow
+1.1 Session Tracking using HttpSession
+1.2 Dynamic form generation in Candidate List page
+
+
+2.import day3.2 as existing project in your workspace (online voting : voter's flow)
+What will you edit ? DBUtils or web.xml ???
+Use case of ServletConfig , for DB independent web app
+
+
+3.  import day3.3 as existing project in your workspace (student admission w/o DB)
+Revise RequestDispatcher's forward scenario
+
+Hands on
+Voter registration
+
+
+Day 4
+1. In  day4.1 , demo of RequestDispatcher's forward technique
+(already discussed)
+
+2. import day4.2 : to revise RD's include technique.
+
+3. import day4.3 (later , after 4:30PM) , to revise web app listeners.
+
+4. Hands on (For more practice)
+4.1 Use supplied Candidate DAO n it's implementation class n complete admin flow , to show top 2 candidates n party wise votes analysis.
+(Mandatory)
+
+DO NOT invalidate the Http Session.
+
+OPTIONAL BUT RECOMMENDED Work (Week end activities !)
+4.2 
+1. Add a Link on admin main page.
+<a href="candidate_details">List All Candidates</a>
+Clicking on this link --> take client to a new servlet : CandidateDetails Page .
+It should list all candidates' details :
+id name partyName votes
+
+2. (Add delete link , next to candidate details)
+<a href="delete_candidate?cid=add candidate id here">Delete</a>
+
+If admin clicks on this link , the selected candidate's details should be deleted n list should be modified suitably.
+
+3. Add a Back link on this : CandidateDetails Page
+<a href="admin_main">Back To Admin Main Page</a>
+
+4. Add a logout link on Admin main page
+<a href="logout">Admin Logout</a>
+Edit existing Logout Servlet,
+Check for role , if it's admin logout , simply invalidate session.
+Add a link to Visit Again (This should be seen only for admin)
+<a href="login.html">Visit Again</a>
+
+
+
+
+Day 5
+1. import day5.1 , in your workspace .
+Open index.jsp , trace all the links to revise 1st half of JSP
+Guess the o/p first n then run the link
+1.1 
+Must look at translated page to understand ,  whatever you write in JSP ,  where does it appear?
+DO NOT overspend time on this !
+
+2.Refer to readme_jsp till include directive
+
+3.Revise servlet main topics 
+Servlet life cycle
+Session Tracking using HttpSession
+Page Navigation(sendRedirect n forward)
+
+4. Complete pending lab assignments.
+
+
+Day 6
+1. import day6.1 in your workspace
+Revise 
+URL rewriting
+JSP forward action
+
+2.import day6.2 , in your workspace
+Edit DBUtils , change db username n password.
+Revise : JSP --Java Bean --DAO --POJO --DB flow
+
+3.Mandatory assignment of JSP using JavaBean
+Voter Registration
+
+
+3.1 Add a Voter SignUp link in login.jsp
+3.2 register.jsp : 
+Accept : first_name , last_name , email, password , dob 
+
+3.3 Continue with UserBean
+add new props
+first_name , last_name : string
+ dob : string
+ (MATCH req param names to JB props --generate setters)
+
+3.4 add new B.L method
+validate age
+(string --> LocalDate, Period.between ,
+if valid --
+ LocalDate --> java.sql.Date
+ invoke user dao's method
+ add reg status in a message n return it to the caller (JSP)
+ 
+ 3.5 process_reg.jsp
+ <jsp:setProperty.../>
+ invoke B.L : using EL syntax
+ eg : ${sessionScope.user.registerNewVoter()} 
+ 
+ 
+ 
+ 
+ 
+
+
+
+Submit it to RegisterVoterServlet
+Read request parameters.
+Add a validation rule. 
+Voter's age must be > 21 .
+If yes insert voter details in DB (using DAO n POJO , DBUtils)
+id : will be auto incremented , role assigned should be voter , the status : false (i.e not yet voted)
+
+Otherwise , give suitable error mesg. 
+
+
+
+
+
+
+
+
+
+
+
+
+4. If you have not yet imported hibernate project , do it after the common lab .
+
+
+
+
+
+
+
+
+
+
+
+
+
